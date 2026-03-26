@@ -154,16 +154,26 @@ section{margin-bottom:72px}
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .hero-main p{font-size:15px;color:var(--fg2);max-width:480px;line-height:1.75}
-.cta{
-  margin-top:24px;
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:13px;color:var(--fg2);
-  border:1px solid var(--border);
-  padding:8px 16px;border-radius:100px;
-  text-decoration:none;
-  transition:border-color .2s,color .2s;
+.cta {
+  margin-top: 24px;
+  background-color: whitesmoke;
+  color: #0B0C0D;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
-.cta:hover{border-color:var(--muted);color:var(--fg)}
+
+.cta:hover {
+  color: black;
+  background-color: #e4e4e7;
+  
+}
 
 /* ── ABOUT ── */
 .about-text{color:var(--fg2);font-size:15px;line-height:1.8}
@@ -289,7 +299,13 @@ body::before{
   pointer-events:none;
   z-index:9999;
 }
-
+#stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+}
 /* ── MOBILE ── */
 @media(max-width:680px){
   .shell{flex-direction:column}
@@ -304,7 +320,7 @@ body::before{
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 </head>
 <body>
-
+<canvas id="stars"></canvas>
 <div class="shell">
 
 <!-- ─── SIDEBAR ─── -->
@@ -437,7 +453,7 @@ body::before{
         <div class="project-video">
        <div class="project-video-placeholder" style="flex-direction:column; gap:12px;">
   
-  <img src="/assets/gym.png" alt="Gym Management System" width="500" />
+  <img src="./assets/gym.png" alt="Gym Management System" width="500" loading="lazy"/>
 
 </div>
         </div>
@@ -463,7 +479,7 @@ body::before{
   
   <img src="./assets/project-management.png" 
        alt="Project Management System" 
-       width="400" />
+       width="400" loading="lazy"/>
 
 </div>
         </div>
@@ -533,7 +549,56 @@ window.addEventListener("scroll", () => {
     }
   });
 });
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+const STAR_COUNT = 80;
+
+for (let i = 0; i < STAR_COUNT; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 1.5,
+    speed: Math.random() * 0.3
+  });
+}
+
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener("mousemove", (e) => {
+  mouseX = (e.clientX - window.innerWidth / 2) * 0.02;
+  mouseY = (e.clientY - window.innerHeight / 2) * 0.02;
+});
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "white";
+
+  stars.forEach(star => {
+    const parallaxX = star.x + mouseX * star.speed;
+    const parallaxY = star.y + mouseY * star.speed;
+
+    ctx.beginPath();
+    ctx.arc(parallaxX, parallaxY, star.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+// Resize fix
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 </script>
 </body>
 </html>
