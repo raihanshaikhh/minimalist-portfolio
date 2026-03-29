@@ -29,6 +29,7 @@ body{
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
 }
+/* cursor */
 
 /* ── LAYOUT ── */
 .shell{
@@ -190,7 +191,7 @@ section{margin-bottom:72px}
   text-decoration:none;
   transition:border-color .2s,transform .2s;
 }
-.edu-card:hover{border-color:var(--muted);transform:translateX(4px)}
+.edu-card:hover{border-color:var(--muted);transform:translateX(4px); cursor: pointer;}
 .edu-logo{
   width:44px;height:44px;flex-shrink:0;
   border-radius:8px;background:var(--bg);
@@ -426,7 +427,7 @@ body::before{
   <section id="education" class="fade-in">
     <div class="section-label">Education</div>
     <div class="edu-grid">
-      <a class="edu-card" href="https://buildspace.so" target="_blank">
+      <a class="edu-card" >
         <div class="edu-logo"><img src="https://portfolio-magicui.vercel.app/buildspace.jpg" alt="Buildspace" onerror="this.style.display='none';this.parentNode.textContent='BS'"/></div>
         <div>
           <div class="edu-name">Amity University</div>
@@ -434,7 +435,7 @@ body::before{
           <div class="edu-years">2022 – 2024</div>
         </div>
       </a>
-      <a class="edu-card" href="https://uwaterloo.ca" target="_blank">
+      <a class="edu-card">
         <div class="edu-logo"><img src="https://portfolio-magicui.vercel.app/waterloo.png" alt="Waterloo" onerror="this.style.display='none';this.parentNode.textContent='UW'"/></div>
         <div>
           <div class="edu-name">Tilak Maharashtra Vidyapeeth Pune</div>
@@ -610,16 +611,8 @@ window.addEventListener("resize", () => {
   canvas.height = window.innerHeight;
 });
 // Visitor Counter
-fetch("https://api.countapi.xyz/hit/raihan-portfolio/visits")
-  .then(res => res.json())
-  .then(data => {
-    const el = document.getElementById("visitor-count");
-    if (el) el.innerText = data.value;
-  })
-  .catch(() => {
-    const el = document.getElementById("visitor-count");
-    if (el) el.innerText = "—";
-  });
+
 </script>
+
 </body>
 </html>
